@@ -48,17 +48,19 @@ def merge_sort(array)
     left_empty = left_min.nil?
     right_empty = right_min.nil?
     both_not_empty = !left_empty && !right_empty
+    select_right = left_empty || (both_not_empty && right_min < left_min)
+    select_left = right_empty || (both_not_empty && left_min <= right_min)
     # puts "left : #{sorted_left}, right : #{sorted_right}"
     # puts "left_min : #{left_min}, right_min : #{right_min}"
     # puts "before result : #{result}\n\n"
 
-    if left_empty || (both_not_empty && right_min < left_min)
+    if select_right
       min_value = right_min
       result << min_value
       sorted_right.delete_at(sorted_right.index(min_value))
       next
 
-    elsif right_empty || (both_not_empty && left_min <= right_min)
+    elsif select_left
       min_value = left_min
       result << min_value
       sorted_left.delete_at(sorted_left.index(min_value))
